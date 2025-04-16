@@ -2,22 +2,19 @@ import sqlite3
 import pandas as pd
 import os
 
-# Create the "database" folder if it doesn't exist
+# Ensures the database folder exists
 os.makedirs("database", exist_ok=True)
 
-# Sample dataset
-data = {
-    'feature1': [10, 20, 30, 40, 50],
-    'feature2': [1.2, 3.4, 2.1, 0.9, 5.5],
-    'feature3': [100, 200, 150, 300, 250],
-    'target': [0, 1, 0, 1, 0]
-}
 
-df = pd.DataFrame(data)
+df = pd.read_csv(r"C:\Users\MAHAKISORE\Desktop\ACADEMIC\SEM 2\MFC-2\MATLAB CODE\CICFlowMeter_Training_Balanced_added.csv")
 
-# Create and save the database
-conn = sqlite3.connect("database/data.db")  # Save it inside the database/ folder
-df.to_sql("sample_data", conn, if_exists="replace", index=False)
+
+conn = sqlite3.connect("database/data.db")
+
+# Saves DataFrame to SQLite (replace if table exists)
+df.to_sql("cic_flow_data", conn, if_exists="replace", index=False)
+
+# Close connection
 conn.close()
 
-print("✅ SQLite3 database created successfully!")
+print("Your CICFlowMeter dataset has been stored successfully in the SQLite database!")
